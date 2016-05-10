@@ -47,12 +47,14 @@ function AvroDoc(input_schemata) {
             if (!popover) return;
 
             $(this).popover({
+                container: content_pane,
                 trigger: 'hover',
-                placement: 'bottom',
+                placement: 'right',
+                html: true,
                 title: function () { return popover.title; },
                 content: function () { return popover.content; },
-                delay: {show: 200, hide: 50},
-                template: '<div class="popover avrodoc-named-type"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div></div></div></div></div>'
+                delay: {show: 200, hide: 50}//,
+                //template: '<div class="popover avrodoc-named-type"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><div></div></div></div></div>'
             });
         });
     }
@@ -61,7 +63,7 @@ function AvroDoc(input_schemata) {
     // result.
     function renderContentPane(template, context) {
         // Clean up old content
-        list_pane.find('li').removeClass('selected');
+        list_pane.find('a.active').removeClass('active');
         $('body > .popover').remove();
         $('body').scrollTop(0);
 
@@ -78,10 +80,10 @@ function AvroDoc(input_schemata) {
         } else {
             renderContentPane('named_type', type);
 
-            // Mark the currently displayed type with a 'selected' CSS class in the type list
+            // Mark the currently displayed type with an 'active' CSS class in the type list
             list_pane.find('a').filter(function () {
-                return $(this).attr('href') === type.shared_link;
-            }).closest('li').addClass('selected');
+              return $(this).attr('href') === type.shared_link;
+            }).addClass('active');
         }
     }
 

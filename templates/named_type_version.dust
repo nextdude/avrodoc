@@ -1,8 +1,8 @@
 {?definitions}
     <p>Defined in:</p>
-    <ul>
+    <ul class="list-unstyled">
         {#definitions}
-            <li>{filename}</li>
+            <li><a href="{filename}" target="_rawschemas">{filename}</a></li>
         {/definitions}
     </ul>
 {/definitions}

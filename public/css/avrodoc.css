@@ -1,0 +1,141 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  margin-top: 54px;
+}
+
+#main-content {
+  margin-top: 54px;
+}
+
+#container {
+  min-height: 100%;
+  position: relative
+}
+
+#list-pane {
+  background: #f3f3f3;
+  position: fixed;
+  z-index: 1;
+  top: 54px;
+  left: 0;
+  bottom: 0;
+  width: 230px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-right: 1px solid #ddd;
+  -webkit-box-shadow: 0 0 20px #ddd;
+  box-shadow: 0 0 20px #ddd
+}
+#list-pane h2 {
+  font-size: 16px;
+  line-height: 26px;
+  padding: 0 18px;
+  margin: 0;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd
+}
+#list-pane h2:first-child {
+  border-top: 0
+}
+#list-pane ul {
+  list-style: none;
+  margin: 0
+}
+#list-pane>ul>li {
+  padding: 15px 18px
+}
+#list-pane>ul>li a {
+  display: block;
+  font-weight: lighter;
+  padding: 4px 0;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+#list-pane>ul>li a:hover {
+  text-decoration: none
+}
+#list-pane>ul>li a:hover .type-name {
+  text-decoration: underline
+}
+#list-pane>ul>li>a .namespace {
+  font-size: 12px;
+  font-weight: lighter;
+  color: #777;
+  padding-left: 5px
+}
+#list-pane>ul>li>ul>li>a {
+  padding: 4px 6px
+}
+#list-pane>ul>li>ul>li>a .label {
+  margin-left: 4px;
+  font-size: 12px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+  background-color: rgba(119, 119, 119, 0.5)
+}
+#list-pane>ul>li>ul>li>a .label-info {
+  background-color: rgba(49, 112, 143, 0.5)
+}
+#list-pane>ul>li>ul>li>a:hover .label {
+  background-color: rgba(119, 119, 119, 0.8)
+}
+#list-pane>ul>li>ul>li>a:hover .label-info {
+  background-color: rgba(49, 112, 143, 0.8)
+}
+#list-pane li.selected {
+  background: white;
+  -webkit-box-shadow: 0 0 3px #ddd;
+  box-shadow: 0 0 3px #ddd;
+  border-radius: 3px
+}
+#list-pane>ul.multiple-schemata>li.selected {
+  background: #0064cd
+}
+#content-pane {
+  padding: 41px 25px 50px 260px
+}
+#content-pane h2.namespace {
+  font-size: 14px;
+  color: #555;
+  margin: 0
+}
+#content-pane h1.type-name {
+  margin-top: 0
+}
+#content-pane .type-doc {
+  margin: 1.42857143 0
+}
+#content-pane table {
+  margin-top: 1.42857143
+}
+#content-pane table td {
+  border-bottom: 1px solid #ddd
+}
+.popover.avrodoc-named-type {
+  width: 600px
+}
+.popover.avrodoc-named-type .popover-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+.popover.avrodoc-named-type .popover-title .namespace {
+  color: #555
+}
+.popover.avrodoc-named-type .popover-title .type-name {
+  font-weight: bold
+}
+.popover.avrodoc-named-type .popover-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-size: 85%
+}
+.popover.avrodoc-named-type .popover-content table th, .popover.avrodoc-named-type .popover-content table td {
+  padding: 4px 5px
+}

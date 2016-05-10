@@ -1,3 +1,10 @@
+Avrodoc + Confluent Schema Registry
+
+This fork of the original avrodoc by Martin Klepmann adds support to get the schemas from
+a [confluent schema registry](https://github.com/confluentinc/schema-registry).
+
+-- Bob Lyons <nextdude@gmail.com>
+
 Avrodoc
 =======
 

@@ -1,21 +1,16 @@
 {?protocols}
     <h2>Protocols</h2>
-    <ul class="protocols">
+    <ul class="protocols list-group">
         {#protocols}
-            <li>
-                <a href="{shared_link}" title="{qualified_name}">
-                    <span class="type-name">{name}</span>
-                    <span class="namespace">{namespace}</span>
-                </a>
+            <li class="list-group-item">
+            <p><a href="{shared_link}" title="{qualified_name}">
+                  <span class="text-muted namespace">{namespace}</span>
+                  <span class="type-name">.{name}</span>
+                </a></p>
 
-                <ul>
+                <ul class="nav nav-pills nav-stacked">
                     {#sorted_messages}
-                        <li>
-                            <a href="{shared_link}" title="{name} message of protocol {protocol_name}">
-                                <span class="type-name">{name}</span>
-                                {?one-way} <span class="label">One-Way</span> {/one-way}
-                            </a>
-                        </li>
+                        {>schema_list_message:./}
                     {/sorted_messages}
                 </ul>
             </li>
@@ -24,12 +19,12 @@
 {/protocols}
 
 <h2>Types</h2>
-<ul class="types">
+<ul class="list-group">
     {#namespaces}
-        <li>
+        <li class="list-group-item">
             <p class="namespace">{namespace}</p>
             {?types}
-                <ul>
+                <ul class="nav nav-pills nav-stacked">
                     {#types}
                         {>schema_list_item:./}
                     {/types}

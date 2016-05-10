@@ -1,2 +1,2 @@
-{?namespace}<span class="namespace">{namespace}.</span>{/namespace}
+{?namespace}<span class="text-muted namespace">{namespace}.</span>{/namespace}
 <span class="type-name">{name}</span>

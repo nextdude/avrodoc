@@ -1,4 +1,4 @@
-{?namespace}<h2 class="namespace">{namespace}</h2>{/namespace}
+{?namespace}<h2 class="text-muted namespace">{namespace}</h2>{/namespace}
 <h1 class="type-name">{name}</h1>
 
 {?versions}

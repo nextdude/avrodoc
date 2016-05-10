@@ -1,40 +1,99 @@
-{! This template is not in the templates directory as its rendered on the server,
-   whereas all the others are rendered in the brower. !}
+{! This template is not in the templates directory as its rendered on the server, whereas all the others are rendered in the browser. !}
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>{title}</title>
 
-    {! iOS Safari treats the position:fixed sidebar very weirdly at non-default zoom levels,
-       so just disable zooming for now. It looks good on an iPad, but on an iPhone the text
-       is unreadably small. Allowing zoom wouldn't help though, because of the weird
-       position:fixed behaviour. If we want to support iPhone that'll need design thinking. !}
-    <meta name="viewport" content="width=1000, user-scalable=no">
+<head>
+  <meta charset="UTF-8">
+  <title>{title}</title>
 
-    {content|s}
+  {! iOS Safari treats the position:fixed sidebar very weirdly at non-default zoom levels, so just disable zooming for now. It looks good on an iPad, but on an iPhone the text is unreadably small. Allowing zoom wouldn't help though, because of the weird
+  position:fixed behaviour. If we want to support iPhone that'll need design thinking. !}
+  <meta name="viewport" content="width=960, user-scalable=yes">
 
-    <script type="text/javascript">
-       jQuery(function () {
-           window.avrodoc = AvroDoc({schemata|s});
-       });
-    </script>
-  </head>
+  {content|s}
 
-  <body>
-    <div id="list-pane"></div>
-    <div id="container">
-      <div id="body">
+  <script type="text/javascript">
+    jQuery(function () {
+      window.avrodoc = AvroDoc({schemata|s});
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+      });
+      var source = $('#source');
+      var sourceType = source.find('[name=type]');
+      var sourceUrl = source.find('[name=url]');
+      sourceType.on('change',function(){
+        sourceUrl.select().focus();
+      });
+      sourceUrl.on('change',function(){
+        if (sourceType.val() == 'schema-registry') {
+          var u = sourceUrl.val();
+          var changed = false;
+          if (!/^https?:\/\//.test(u)) {
+            u = 'http://' + u;
+            changed = true;
+          }
+          if (!/:\d+$/.test(u)) {
+            u += ":8081";
+            changed = true;
+          }
+          if (changed) {
+            sourceUrl.val(u);
+          }
+          return true;
+        }
+      });
+      source.on('submit',function(){
+        location.reload();
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <nav id="top-navbar" class="navbar navbar-light navbar-fixed-top">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#collapse-navbar">
+      &#9776;
+    </button>
+    <div class="collapse navbar-toggleable-xs" id="collapse-navbar">
+      <a class="navbar-brand" href="#">Avrodoc</a>
+      <form id="source" class="form-inline pull-xs-right" action="/">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <select name="type" class="c-select form-control">
+              <option value="schema-registry"{?isSchemaRegistry} selected{/isSchemaRegistry}>Schema Registry</option>
+              <option value="file-system"{?isFileSystem} selected{/isFileSystem}>File System</option>
+            </select>
+          </span>
+          <input class="form-control" type="text" value="{source.url}" name="url" placeholder="path or url" required>
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary">Go</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <div class="fluid-container">
+    <div class="row">
+      <div class="col-lg-3 row-offcanvas row-offcanvas-left">
+        <div id="list-pane" class="sidebar-offcanvas">
+        </div>
+      </div>
+      <div class="col-lg-9">
         <div id="content-pane">
           Loading...
         </div>
-      </div>
-      <div id="footer">
-        <div id="attribution">
-          Hello! This is <a href="https://github.com/ept/avrodoc" target="_blank">Avrodoc</a> :)
-        </div>
+        <nav class="navbar navbar-light navbar-fixed-bottom">
+          <div class="pull-right">
+            Hello! This is <a href="https://github.com/nextdude/avrodoc" target="_blank">Avrodoc</a> :)
+          </div>
+        </nav>
       </div>
     </div>
-  </body>
+  </div>
+
+</body>
+
 </html>
