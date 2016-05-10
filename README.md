@@ -1,7 +1,9 @@
 Avrodoc + Confluent Schema Registry
 
 This fork of the original avrodoc by Martin Klepmann adds support to get the schemas from
-a [confluent schema registry](https://github.com/confluentinc/schema-registry).
+a [confluent schema registry](https://github.com/confluentinc/schema-registry). It also updates
+to express 4 and bootstrap 4 and gets rid of all the custom less work in the
+original. Thanks Martin for your work on Avro!
 
 -- Bob Lyons <nextdude@gmail.com>
 
