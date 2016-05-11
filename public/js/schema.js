@@ -19,6 +19,8 @@
 AvroDoc.Schema = function (avrodoc, shared_types, schema_json, filename) {
     var _public = {filename: filename};
 
+    schema_json.original = JSON.stringify(schema_json);
+
     // {'namespace.name': {type: 'record', fields: [...]}}
     // containing only types and messages defined in this schema
     var named_types = {};
@@ -256,11 +258,8 @@ AvroDoc.Schema = function (avrodoc, shared_types, schema_json, filename) {
                 shared_types[qualified_name].push(shared_schema);
             }
 
-            // Only track definitions if we're dealing with multiple input files
-            if (avrodoc.input_schemata.length > 1) {
-                shared_schema.definitions = shared_schema.definitions || [];
-                shared_schema.definitions.push(schema);
-            }
+            shared_schema.definitions = shared_schema.definitions || [];
+            shared_schema.definitions.push(schema);
         }
         schema.shared = shared_schema;
     }

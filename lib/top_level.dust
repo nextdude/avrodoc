@@ -58,6 +58,7 @@
     </button>
     <div class="collapse navbar-toggleable-xs" id="collapse-navbar">
       <a class="navbar-brand" href="#">Avrodoc</a>
+      <a href="https://github.com/nextdude/avrodoc" target="_blank"><i class="fa fa-github"></i></a>
       <form id="source" class="form-inline pull-xs-right" action="/">
         <div class="input-group">
           <span class="input-group-btn">
@@ -85,11 +86,6 @@
         <div id="content-pane">
           Loading...
         </div>
-        <nav class="navbar navbar-light navbar-fixed-bottom">
-          <div class="pull-right">
-            Hello! This is <a href="https://github.com/nextdude/avrodoc" target="_blank">Avrodoc</a> :)
-          </div>
-        </nav>
       </div>
     </div>
   </div>

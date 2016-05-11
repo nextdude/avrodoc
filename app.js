@@ -23,7 +23,9 @@ function getSchemata(source, cb) {
       }
       else {
         subjects.forEach(function(s){
-          schemata.push({filename: '/subjects/' + s.subject + '/versions/' + s.versions[s.versions.length-1] });
+          s.versions.reverse().forEach(function(v){
+            schemata.push({filename: '/subjects/' + s.subject + '/versions/' + v });
+          });
         });
         cb(null,schemata);
       }

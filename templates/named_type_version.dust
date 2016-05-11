@@ -1,10 +1,12 @@
 {?definitions}
-    <p>Defined in:</p>
-    <ul class="list-unstyled">
+    <p>Defined in:
+
         {#definitions}
-            <li><a href="{filename}" target="_rawschemas">{filename}</a></li>
+            {@first}&nbsp{/first}
+            <a href="{filename}" target="_rawschemas">{filename}</a>{@sep}, {/sep}
         {/definitions}
-    </ul>
+
+    </p>
 {/definitions}
 
 {>named_type_details:./}

@@ -2,9 +2,27 @@
 <h1 class="type-name">{name}</h1>
 
 {?versions}
-    {#versions}
-        {>named_type_version:./}
-    {/versions}
+  <ul class="nav nav-tabs" role="tablist">
+  {#versions}
+    <li class="nav-item">
+      <a class="nav-link{@first} active{/first}" href="#{filename|id}" role="tab" data-toggle="tab">{filename|v}</a>
+    </li>
+  {/versions}
+    <li class="nav-item">
+      <a class="nav-link" href="#edit-schema" role="tab" data-toggle="tab"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+  {#versions}
+    <div role="tabpanel" class="tab-pane fade in{@first} active{/first}" id="{filename|id}">
+      {>named_type_version:./}
+    </div>
+  {/versions}
+    <div role="tabpanel" class="tab-pane fade in" id="edit-schema">
+      {>edit_schema:./}
+    </div>
+  </div>
 {:else}
-    {>named_type_version/}
+    {>named_type_version:./}
 {/versions}

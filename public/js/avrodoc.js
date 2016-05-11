@@ -6,6 +6,19 @@ dust.filters.md = function (value) {
     return markdown.toHTML(value);
 };
 
+dust.filters.id = function(value) {
+  return value.replace(/\//g,"-").replace(/^-/,"");
+};
+
+dust.filters.v = function(value){
+  return "Version " + value.split('/').pop();
+};
+
+dust.filters.log = function(value) {
+  console.log("value = ",value);
+  return value;
+}
+
 function AvroDoc(input_schemata) {
 
     var _public = {};
@@ -59,6 +72,10 @@ function AvroDoc(input_schemata) {
         });
     }
 
+    function saveJson(editor, type) {
+      console.log("Saving JSON",editor,type);
+    }
+
     // Renders the named template with the given context and updates the content pane to show the
     // result.
     function renderContentPane(template, context) {
@@ -69,6 +86,21 @@ function AvroDoc(input_schemata) {
 
         dust.render(template, context, function (err, html) {
             content_pane.html(html);
+            var id = "edit-" + dust.filters.id(context.filename);
+            var editor = ace.edit(id);
+            editor.setTheme("ace/theme/chrome");
+            editor.session.setMode("ace/mode/json");
+            var json = JSON.stringify(JSON.parse(context.original),null,2);
+            editor.setValue(json);
+            var buttons = $('#'+id).prev();
+            buttons.find('button.save-json').on('click',function(){
+              saveJson(editor,context);
+            });
+            buttons.find('button.reset-json').on('click',function(){
+              if (confirm("Reset JSON?")) {
+                editor.setValue(json);
+              }
+            });
             setupPopovers();
         });
     }

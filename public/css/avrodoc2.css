@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700);
-
 body {
   font-family: 'Roboto', sans-serif;
 }
@@ -33,8 +31,32 @@ body {
   color: white;
 }
 
+#list-pane .nav-link .label-pill {
+  line-height: inherit;
+}
+
 #list-pane .protocols, #list-pane .types {
   margin-bottom: 1rem;
+}
+
+.json-editor-container {
+  padding: 0 2rem 0 0;
+}
+
+.json-editor-container .btn-toolbar {
+  padding-bottom: 1rem;
+}
+
+.json-editor {
+  width: 100%;
+  height: 30rem;
+  border: 1px solid black;
+  font-family: monospace;
+  font-size: 1.3rem !important;
+}
+
+.tab-content {
+  padding-top: 1rem;
 }
 
 .popover {
