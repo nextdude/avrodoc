@@ -1,0 +1,7 @@
+<div class="json-editor-container">
+<div class="btn-toolbar" role="toolbar" style="padding-bottom: 1rem">
+  <button type="button" class="save-json btn btn-primary" title="Save Changes to Registry/File System">Save</button>
+  <button type="button" class="reset-json btn btn-danger pull-xs-right" title="Reset to Original Schema">Reset JSON</button>
+</div>
+<pre id="edit-{filename|id}" class="json-editor"></pre>
+</div>
