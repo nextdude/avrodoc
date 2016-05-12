@@ -29,6 +29,11 @@ function AvroDoc(input_schemata) {
     // popover_by_name[filename][qualified_name] = {title: 'html', content: 'html'}
     var popover_by_name = {};
 
+    // make sure we send json to server
+    $.ajaxSetup({
+      contentType: "application/json; charset=utf-8"
+    });
+
     // Render all the popovers ahead of time, because Dust's rendering is async but the popover
     // plugin expects to receive the popover content synchronously when it is triggered.
     function renderPopovers() {
@@ -72,8 +77,42 @@ function AvroDoc(input_schemata) {
         });
     }
 
-    function saveJson(editor, type) {
-      console.log("Saving JSON",editor,type);
+    function saveJson(button, editor, type) {
+      var isClean = editor.session.getUndoManager().isClean();
+      if (!isClean) {
+        console.log("Saving JSON",editor,type);
+        // do save
+        var newJson = editor.getValue();
+        try {
+          type.original = JSON.stringify(JSON.parse(newJson));
+          editor.session.getUndoManager().markClean();
+          $(button).prop('disabled',true);
+        }
+        catch (e) {
+          alert(e);
+        }
+      }
+    }
+
+    function getFormattedJson(unformattedJson,indent) {
+      indent = indent || 2;
+      try {
+        var obj = typeof unformattedJson == "string" ? JSON.parse(unformattedJson) : unformattedJson;
+        return JSON.stringify(obj,null,indent);
+      }
+      catch (e) {
+        return null;
+      }
+    }
+
+    function getUnformattedJson(formattedJson) {
+      try {
+        var obj = typeof formattedJson == "string" ? JSON.parse(formattedJson) : formattedJson;
+        return JSON.stringify(obj);
+      }
+      catch (e) {
+        return null;
+      }
     }
 
     // Renders the named template with the given context and updates the content pane to show the
@@ -86,21 +125,50 @@ function AvroDoc(input_schemata) {
 
         dust.render(template, context, function (err, html) {
             content_pane.html(html);
+            var postUrl = context.filename.replace(/\/\d+$/,"");
             var id = "edit-" + dust.filters.id(context.filename);
             var editor = ace.edit(id);
             editor.setTheme("ace/theme/chrome");
             editor.session.setMode("ace/mode/json");
-            var json = JSON.stringify(JSON.parse(context.original),null,2);
-            editor.setValue(json);
-            var buttons = $('#'+id).prev();
-            buttons.find('button.save-json').on('click',function(){
-              saveJson(editor,context);
-            });
-            buttons.find('button.reset-json').on('click',function(){
-              if (confirm("Reset JSON?")) {
-                editor.setValue(json);
+            var json = getFormattedJson(context.original);
+            var UNCHANGED=0, CHANGED=1, INVALID=-1;
+            var getState = function() {
+              var text = getUnformattedJson(editor.getValue());
+              if (text === null) {
+                return INVALID;
               }
+              if (text === context.original) {
+                return UNCHANGED;
+              }
+              return CHANGED;
+            };
+            var resetJson = function() {
+              editor.setValue(json);
+              editor.session.getUndoManager().reset();
+            };
+            var saveJson = function() {
+              var updatedJson = getUnformattedJson(editor.getValue());
+              if (typeof updatedJson == "string") {
+                $.post(postUrl,updatedJson,function(){
+                  context.original = updatedJson;
+                  json = getFormattedJson(updatedJson);
+                  resetJson();
+                  toastr.success("Saved new version of " + context.name);
+                }).fail(function(err){
+                  toastr.error("Failed saving " + context.name + " (" + err + ")");
+                });
+              }
+            };
+            resetJson();
+            var saveButton = $('#'+id).prev().find('button.save-json');
+            var resetButton = $('#'+id).prev().find('button.reset-json');
+            editor.on("change", function() {
+              var state = getState();
+              saveButton.prop('disabled',state != CHANGED);
+              resetButton.prop('disabled',state == UNCHANGED);
             });
+            saveButton.on('click',saveJson);
+            resetButton.on('click',resetJson);
             setupPopovers();
         });
     }

@@ -45,6 +45,7 @@ body {
 
 .json-editor-container .btn-toolbar {
   padding-bottom: 1rem;
+  overflow: hidden;
 }
 
 .json-editor {
@@ -52,7 +53,7 @@ body {
   height: 30rem;
   border: 1px solid black;
   font-family: monospace;
-  font-size: 1.3rem !important;
+  font-size: 1.2rem !important;
 }
 
 .tab-content {

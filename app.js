@@ -23,7 +23,7 @@ function getSchemata(source, cb) {
       }
       else {
         subjects.forEach(function(s){
-          s.versions.reverse().forEach(function(v){
+          s.versions.sort(function(a,b){return b-a}).forEach(function(v){
             schemata.push({filename: '/subjects/' + s.subject + '/versions/' + v });
           });
         });
